@@ -1,0 +1,62 @@
+# Project Information
+site_name: Prism.Magician
+site_description: Documentation for the Prism Magician
+site_author: Dan Siegel
+site_url: https://magic.prismplugins.com
+
+# Copyright
+copyright: 'Copyright &copy; 2016 - 2020 Dan Siegel'
+
+# Configuration
+theme:
+  name: 'material'
+  custom_dir: 'theme'
+  logo: assets/thumbnail.png
+  favicon: assets/favicon.ico
+  language: en
+  # feature:
+  #   tabs: true
+  palette:
+    primary: 'white'
+    accent: 'cyan'
+
+# Social
+extra:
+  social:
+    - icon: fontawesome/brands/html5
+      link: https://dansiegel.net
+    - icon: fontawesome/brands/github
+      link: https://github.com/dansiegel
+    - icon: fontawesome/brands/twitch
+      link: https://twitch.tv/dansiegel
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/DanJSiegel
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/DanSiegel
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/DanSiegel
+
+# Extensions
+markdown_extensions:
+  - admonition:
+  - codehilite:
+      linenums: false
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Connecting to the Feed: connecting-to-the-feed.md
+  - Code Gen vs IL Weaving: codegen-vs-il-weaving.md
+  - Analyzers:
+    - About: analyzers/index.md
+  - Code Generation:
+    - Auto Initialization: code-gen/auto-initialization.md
+    - Automatic View Registration: code-gen/view-registration.md
+    - Dialogs: code-gen/dialogs.md
+    - Service Registration: code-gen/service-registration.md
+    - View Bindable/Dependency Props: code-gen/view-bindable-props.md
+    - ViewModelBase: code-gen/viewmodelbase.md
+  - Become a Sponsor: https://github.com/sponsors/dansiegel
+  - Enterprise Access: enterprise.md
