@@ -243,9 +243,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-is-a-combination-of-codegen-il-weaving-better" class="md-nav__link">
+    Why is a Combination of CodeGen &amp; IL Weaving Better?
+  </a>
+  
+    <nav class="md-nav" aria-label="Why is a Combination of CodeGen &amp; IL Weaving Better?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#how-the-magician-uses-these-concepts" class="md-nav__link">
     How The Magician Uses these concepts
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -333,8 +346,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../code-gen/view-registration/" class="md-nav__link">
-      Automatic View Registration
+    <a href="../code-gen/view-bindable-props/" class="md-nav__link">
+      Bindable/Dependency Props
     </a>
   </li>
 
@@ -357,6 +370,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../code-gen/reactiveui/" class="md-nav__link">
+      ReactiveUI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../code-gen/service-registration/" class="md-nav__link">
       Service Registration
     </a>
@@ -369,8 +394,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../code-gen/view-bindable-props/" class="md-nav__link">
-      View Bindable/Dependency Props
+    <a href="../code-gen/view-registration/" class="md-nav__link">
+      View Registration
     </a>
   </li>
 
@@ -447,9 +472,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#why-is-a-combination-of-codegen-il-weaving-better" class="md-nav__link">
+    Why is a Combination of CodeGen &amp; IL Weaving Better?
+  </a>
+  
+    <nav class="md-nav" aria-label="Why is a Combination of CodeGen &amp; IL Weaving Better?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#how-the-magician-uses-these-concepts" class="md-nav__link">
     How The Magician Uses these concepts
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -502,13 +540,8 @@
 
 <h2 id="benefits-drawbacks">Benefits &amp; Drawbacks<a class="headerlink" href="#benefits-drawbacks" title="Permanent link">&para;</a></h2>
 <p>There is a clear benefit here that our code can remain nice and clean as the InitializeComponent can be added into our existing code for us. However when debugging the debugger isn't going to be able to stop on the method invocation. On the flip side if we had a debug breakpoint in InitializeComponent, as generated code we could actively set breakpoints and step through our normal debugging process.</p>
-<h2 id="how-the-magician-uses-these-concepts">How The Magician Uses these concepts<a class="headerlink" href="#how-the-magician-uses-these-concepts" title="Permanent link">&para;</a></h2>
-<p>The Magician primarily focuses on updating getters and setters for your properties while relying on Code Generation as much as possible. This means that you may have code like:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">[Bindable]</span>
-<span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-</code></pre></div>
-
-<p>Which the Magician will then turn into:</p>
+<h2 id="why-is-a-combination-of-codegen-il-weaving-better">Why is a Combination of CodeGen &amp; IL Weaving Better?<a class="headerlink" href="#why-is-a-combination-of-codegen-il-weaving-better" title="Permanent link">&para;</a></h2>
+<p>Many fans of CodeGen believe that is is superior and you never need IL Weaving. This is just patently false. Let's look at a common case. When working with an MVVM Architecture we rely heavily on INotifyPropertyChanged to notify the Binding engine that a value has changed and the View needs to update something. If we look at the full code that we need we will again see:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">private</span> <span class="kt">string</span> <span class="n">_message</span><span class="p">;</span>
 <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span>
 <span class="p">{</span>
@@ -517,7 +550,51 @@
 <span class="p">}</span>
 </code></pre></div>
 
-<p>In this sample we use Code Generation to add the missing backing field while using IL Weaving to update the getter and setter.</p>
+<p>While this is indeed the code required, it is clunky and quickly creates code clutter making it harder to come back to the code and see what our real intent is. It's for this reason we want to use something that will modify the code we write so that we can write less and keep our code easier to read in full. So what does the CodeGen version of this look like?</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+<span class="na">    [Bindable]</span>
+    <span class="k">private</span> <span class="kt">string</span> <span class="n">_message</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This is indeed less to write, and while the attribute may help us decipher a little bit what is going on it's still a bit unclear since we're really expecting our XAML to be like:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;Label</span> <span class="na">Text=</span><span class="s">&quot;{Binding Message}&quot;</span> <span class="nt">/&gt;</span>
+</code></pre></div>
+
+<p>Ultimately a private backing field is not at all part of our intent, it is part of an ends to our means. So how can this be better? Well, traditionally you might have used PropertyChanged.Fody in which you might have:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This is much better now we at least know where our public Message property came from, but our backing field doesn't actually exist in anything we can work with. This is where the Magician really shines with a partnership between CodeGen and IL Weaving.</p>
+<h3 id="how-the-magician-uses-these-concepts">How The Magician Uses these concepts<a class="headerlink" href="#how-the-magician-uses-these-concepts" title="Permanent link">&para;</a></h3>
+<p>The Magician primarily focuses on updating getters and setters for your properties while relying on Code Generation as much as possible. This means that your code remains clean, yet readable and clear on it's intent.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+<span class="na">    [Bindable]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Remember our real intent is to have a public property called Message which will be bindable for our View to consume. With this the Magician will use CodeGen to provide us our backing field, and IL Weaving to update the getter and setter resulting in the full code that we need to bind our properties in the View.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="kt">string</span> <span class="n">_message</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span>
+    <span class="p">{</span>
+        <span class="k">get</span> <span class="p">=&gt;</span> <span class="n">_message</span><span class="p">;</span>
+        <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">SetProperty</span><span class="p">(</span><span class="k">ref</span> <span class="n">_message</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For those using ReactiveUI with a base class of ReactiveObject, be sure to use the <code>Reactive</code> attribute.</p>
+</div>
                 
               
               

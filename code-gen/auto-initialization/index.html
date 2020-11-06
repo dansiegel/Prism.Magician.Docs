@@ -324,8 +324,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../view-registration/" class="md-nav__link">
-      Automatic View Registration
+    <a href="../view-bindable-props/" class="md-nav__link">
+      Bindable/Dependency Props
     </a>
   </li>
 
@@ -348,6 +348,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../reactiveui/" class="md-nav__link">
+      ReactiveUI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../service-registration/" class="md-nav__link">
       Service Registration
     </a>
@@ -360,8 +372,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../view-bindable-props/" class="md-nav__link">
-      View Bindable/Dependency Props
+    <a href="../view-registration/" class="md-nav__link">
+      View Registration
     </a>
   </li>
 
@@ -453,6 +465,20 @@
                 <p>Auto Initialization was a powerful feature previewed in Prism.Forms 7.2. There were a number of limitations though as this was ultimately powered by runtime Reflection, and of course was limited to only supporting Xamarin.Forms applications.</p>
 <h2 id="how-the-magician-does-it-better">How The Magician Does it Better!<a class="headerlink" href="#how-the-magician-does-it-better" title="Permanent link">&para;</a></h2>
 <p>The Magician works at build time to generate the required Initialization and it doesn't care about whether you're working with a Forms, WPF, or Uno platform app.</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[AutoInitialize]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ViewAViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+<span class="na">    [Bindable]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Here we can keep our ViewModel nice and clean. We absolutely intend on having a Bindable Message property, but we don't need to add all of the boiler plate to check for it and set it. Instead we can simply add the AutoInitialize attribute to the ViewModel and the Magician will generate the initialization logic for us.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>How the Magician operates here is a little different depending on whether we are working with a ViewModel for a Region, Dialog or Page Navigation.</p>
+</div>
+<p>In the event that you have already provided a method body for the Initialization method, the Magician will generate a AutoInitialize method. This method will then be invoked via IL Weaving from the correct initialization method.</p>
                 
               
               

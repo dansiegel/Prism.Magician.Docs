@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://magic.prismplugins.com/code-gen/viewmodels/">
+        <link rel="canonical" href="https://magic.prismplugins.com/code-gen/reactiveui/">
       
       
         <meta name="author" content="Dan Siegel">
@@ -20,7 +20,7 @@
     
     
       
-        <title>Viewmodels - Prism.Magician</title>
+        <title>ReactiveUI - Prism.Magician</title>
       
     
     
@@ -66,6 +66,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#reactive-properties" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -91,7 +96,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Viewmodels
+              ReactiveUI
             
           </span>
         </div>
@@ -248,10 +253,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
     
     <label class="md-nav__link" for="nav-6">
       Code Generation
@@ -283,8 +290,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../view-registration/" class="md-nav__link">
-      Automatic View Registration
+    <a href="../view-bindable-props/" class="md-nav__link">
+      Bindable/Dependency Props
     </a>
   </li>
 
@@ -298,6 +305,59 @@
     <a href="../dialogs/" class="md-nav__link">
       Dialogs
     </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        ReactiveUI
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="./" class="md-nav__link md-nav__link--active">
+      ReactiveUI
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reactive-properties" class="md-nav__link">
+    Reactive Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observableaspropertyhelper" class="md-nav__link">
+    ObservableAsPropertyHelper
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -319,8 +379,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../view-bindable-props/" class="md-nav__link">
-      View Bindable/Dependency Props
+    <a href="../view-registration/" class="md-nav__link">
+      View Registration
     </a>
   </li>
 
@@ -373,15 +433,102 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reactive-properties" class="md-nav__link">
+    Reactive Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#observableaspropertyhelper" class="md-nav__link">
+    ObservableAsPropertyHelper
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
                 
-                  <h1>Viewmodels</h1>
+                  <h1>ReactiveUI</h1>
                 
-                
+                <p>ReactiveUI is an extremely popular library that further helps developers write MVVM applications using the Reactive Programming model. There are often questions about whether you should use ReactiveUI or <strong><em>_</em></strong>___. The simple fact of the matter is that when building a Prism Application, this is not an or, but rather an AND. ReactiveUI and Prism work very well together.</p>
+<p>In these cases you may find yourself using ReactiveObject as a base class rather than Prism's BindableBase. The Magician fully understands how to use ReactiveUI.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Do NOT use ReactiveUI.Fody with the Magician. The Magician replaces all functionality from that weaver package, including Reactive properties, and ObservableAsHelper's.</p>
+</div>
+<h2 id="reactive-properties">Reactive Properties<a class="headerlink" href="#reactive-properties" title="Permanent link">&para;</a></h2>
+<p>When working with normal Bindable properties using BindableBase we use the <code>Bindable</code> attribute on the properties we want to have the Magician update for us.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+<span class="na">    [Bindable]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>However when using ReactiveObject as our base class the getter and setter are a little different and ultimately the Bindable paradigm is the wrong terminology. To keep this clear the Bindable attribute used on properties within a class inheriting from ReactiveObject will generate an error. You should instead use the <code>Reactive</code> attribute on these properties.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">ReactiveObject</span>
+<span class="p">{</span>
+<span class="na">    [Reactive]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="observableaspropertyhelper">ObservableAsPropertyHelper<a class="headerlink" href="#observableaspropertyhelper" title="Permanent link">&para;</a></h2>
+<p>ReactiveUI has a fantastic helper type known as ObservableAsPropertyHelper&lt;T>. This helper class enables us to take at times complex Observables and return simple properties that we will use to bind to, while at the same time helping us to raise the Property Changed event. So what does this look like?</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">ViewAViewModel</span> <span class="p">:</span> <span class="n">ReactiveObject</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">ViewAViewModel</span><span class="p">(</span><span class="n">IConnectivity</span> <span class="n">connectivity</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">connectivity</span><span class="p">.</span><span class="n">WhenInternetStatusChanged</span><span class="p">()</span>
+            <span class="p">.</span><span class="n">ToProperty</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">nameof</span><span class="p">(</span><span class="n">IsOnline</span><span class="p">),</span> <span class="k">out</span> <span class="n">_isOnlineHelper</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="n">ObservableAsPropertyHelper</span><span class="p">&lt;</span><span class="kt">bool</span><span class="p">&gt;</span> <span class="n">_isOnlineHelper</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsOnline</span> <span class="p">=&gt;</span> <span class="n">_isOnlineHelper</span><span class="p">?.</span><span class="n">Value</span> <span class="p">??</span> <span class="k">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Here again the Magician uses a combination of things to help you out and keep you code clear on intent.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">class</span> <span class="nc">ViewAViewModel</span> <span class="p">:</span> <span class="n">ReactiveObject</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="nf">ViewAViewModel</span><span class="p">(</span><span class="n">IConnectivity</span> <span class="n">connectivity</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">connectivity</span><span class="p">.</span><span class="n">WhenInternetStatusChanged</span><span class="p">()</span>
+            <span class="p">.</span><span class="n">ToProperty</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">nameof</span><span class="p">(</span><span class="n">IsOnline</span><span class="p">),</span> <span class="k">out</span> <span class="n">_isOnlineHelper</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+<span class="na">    [ObservableAsProperty]</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">IsOnline</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Ultimately the Magician has no clue what business logic you require to create the ObservableAsPropertyHelper, however we can again use CodeGeneration to create the private field and IL weaving to update the getter here.</p>
                 
               
               

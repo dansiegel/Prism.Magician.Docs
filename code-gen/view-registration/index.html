@@ -20,7 +20,7 @@
     
     
       
-        <title>Automatic View Registration - Prism.Magician</title>
+        <title>View Registration - Prism.Magician</title>
       
     
     
@@ -96,7 +96,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Automatic View Registration
+              View Registration
             
           </span>
         </div>
@@ -288,6 +288,54 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../view-bindable-props/" class="md-nav__link">
+      Bindable/Dependency Props
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../dialogs/" class="md-nav__link">
+      Dialogs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../reactiveui/" class="md-nav__link">
+      ReactiveUI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../service-registration/" class="md-nav__link">
+      Service Registration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -297,12 +345,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Automatic View Registration
+        View Registration
         <span class="md-nav__icon md-icon"></span>
       </label>
     
     <a href="./" class="md-nav__link md-nav__link--active">
-      Automatic View Registration
+      View Registration
     </a>
     
       
@@ -337,46 +385,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#region-dialog-navigation-keys" class="md-nav__link">
+    Region, Dialog, &amp; Navigation Keys
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../dialogs/" class="md-nav__link">
-      Dialogs
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../service-registration/" class="md-nav__link">
-      Service Registration
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../view-bindable-props/" class="md-nav__link">
-      View Bindable/Dependency Props
-    </a>
   </li>
 
         
@@ -463,6 +482,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#region-dialog-navigation-keys" class="md-nav__link">
+    Region, Dialog, &amp; Navigation Keys
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -476,7 +502,7 @@
               
                 
                 
-                  <h1>Automatic View Registration</h1>
+                  <h1>View Registration</h1>
                 
                 <p>Automatic View Registration couldn't be easier and has some distinct performance advantages over the built in Prism Automatic View registration for Prism.Forms. The Magician's Automatic View Registration:</p>
 <ul>
@@ -485,6 +511,14 @@
 <li>registers both the View &amp; ViewModel</li>
 <li>extends the standard Prism ViewModelLocator defaults to find ViewModels with other common conventions</li>
 </ul>
+<p>Sounds great right? But how do you use it? Simply add the AutoRegisterViews attribute to your Module, PrismApplication, or PrismBootstrapper (WPF only) as shown below:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[AutoRegisterViews]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">App</span> <span class="p">:</span> <span class="n">PrismApplication</span>
+<span class="p">{</span>
+    <span class="c1">// your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
 <h2 id="viewmodel-location">ViewModel Location<a class="headerlink" href="#viewmodel-location" title="Permanent link">&para;</a></h2>
 <p>By Default Prism's ViewModel Locator convention looks for the ViewModel in the ViewModels namespace with a ViewModel suffix like:</p>
 <ul>
@@ -495,19 +529,14 @@
 <ul>
 <li>SomePage -&gt; SomeViewModel</li>
 </ul>
-<p>In addition to that the Magician will check in both the Views and ViewModel's namespaces incase you prefer to keep your ViewModel and View next to eachother in a more logical construct.</p>
+<p>In addition to that the Magician will check in both the Views and ViewModel's namespaces incase you prefer to keep your ViewModel and View next to each other in a more logical construct.</p>
 <h2 id="what-is-a-view">What is a View<a class="headerlink" href="#what-is-a-view" title="Permanent link">&para;</a></h2>
-<p>This is actually a little more complex than you might think when it comes to automatic View discovery for Navigation. In the case of WPF or Uno platform, and in the event that you are using Regions for Prism.Forms your View is realistically derived from a type that could make it a custom or composite control. As a result we only search within the Views and Pages namespaces.</p>
+<p>This is actually a little more complex than you might think when it comes to automatic View discovery for Navigation. In the case of WPF or Uno platform, and in the event that you are using Regions for Prism.Forms your View is realistically derived from a type that could make it a custom or composite control. As a filter the Magician will evaluate all appropriate types within the Dialogs, Views, and Pages namespaces.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Magician will not register any View types that are abstract, and will automatically register the Xamarin.Forms TabbedPage &amp; NavigationPage</p>
 </div>
 <h2 id="customized-view-naming">Customized View Naming<a class="headerlink" href="#customized-view-naming" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This feature is still somewhat in flux as some additional functionality is planned, and how the Magician accomplishes custom view naming will be changing.</p>
-</div>
-<p>Currently the Magician utilizes a service called the INameFormatProvider which will take an incoming View type and will return the View name. While this does provide a lot of flexibility it also creates some headaches when it comes to Modularity. In the event that you do nothing, All View names in Modules will end up just bing the View type name, however if a INameFormatProvider is registered it can alter the names of the Views in the application and modules.</p>
 <p>Let's assume that you have a View name like <code>UserProfilePage</code>. There are 4 common conventions that developers tend to use.</p>
 <ul>
 <li>UserProfilePage</li>
@@ -517,6 +546,31 @@
 </ul>
 <p>Depending on your preference, in your application project add the NameFormatProvider attribute and pass in the preferred Style. If you do not do this your application will continue to use the default Type name.</p>
 <div class="codehilite"><pre><span></span><code><span class="na">[assembly: NameFormatProvider(NameFormatProviderStyle.CamelCaseNoPageSuffix)]</span>
+</code></pre></div>
+
+<h2 id="region-dialog-navigation-keys">Region, Dialog, &amp; Navigation Keys<a class="headerlink" href="#region-dialog-navigation-keys" title="Permanent link">&para;</a></h2>
+<p>As the Magician works to register each View it finds for Page Navigation, Region Navigation or as a Dialog, it will collect a mapping of what each name should be along with each type. When it's all done you will get up to 3 new classes generated in the .Navigation namespace of your project.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">NavigationKeys</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">HomePage</span> <span class="p">=</span> <span class="s">&quot;home&quot;</span><span class="p">;</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">LoginPage</span> <span class="p">=</span> <span class="s">&quot;login&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">DialogKeys</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">AlertDialog</span> <span class="p">=</span> <span class="s">&quot;alert&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>With a generated keys class you can now directly reference what you need in an MVVM friendly way without violating the MVVM pattern with:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">_regionManager</span><span class="p">.</span><span class="n">RequestNavigate</span><span class="p">(</span><span class="n">nameof</span><span class="p">(</span><span class="n">ViewA</span><span class="p">));</span>
+</code></pre></div>
+
+<p>Additionally the Magician will evaluate your XAML and construct a list of the various Regions within your WPF, Uno Platform, or Xamarin.Forms application, and will create an additional class like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">RegionNames</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">ContentRegion</span> <span class="p">=</span> <span class="s">&quot;ContentRegion&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
                 
               
