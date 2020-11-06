@@ -90,5 +90,9 @@ public class AuthenticationService : IAuthenticationService, IUserSessionService
 !!! note
     When using RegisterManySingleton you will get a single instance of the Service implementation that will be used across all services. It will not be a single instance per service.
 
-!!! note
+!!! important
     If you have an interface such as IDisposable that should not be implemented be sure to pass the service types in the constructor of the attribute
+
+## See Also
+
+- [Automatic View Registration](view-registration.md)

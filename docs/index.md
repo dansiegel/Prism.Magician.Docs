@@ -25,3 +25,7 @@ In addition to the Magician understanding how to work with WPF & Uno Platform th
 - ReactiveUI
 - Shiny Lib
 - Microsoft.Extensions.DependencyInjection
+
+## Try it out
+
+Want to see more on how to use the Magician, you can try out the sample apps on [GitHub](https://github.com/dansiegel/Prism.Magician-Demo).

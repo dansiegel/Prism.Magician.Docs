@@ -53,10 +53,11 @@ nav:
     - About: analyzers/index.md
   - Code Generation:
     - Auto Initialization: code-gen/auto-initialization.md
-    - Automatic View Registration: code-gen/view-registration.md
+    - Bindable/Dependency Props: code-gen/view-bindable-props.md
     - Dialogs: code-gen/dialogs.md
+    - ReactiveUI: code-gen/reactiveui.md
     - Service Registration: code-gen/service-registration.md
-    - View Bindable/Dependency Props: code-gen/view-bindable-props.md
+    - View Registration: code-gen/view-registration.md
     - ViewModelBase: code-gen/viewmodelbase.md
   - Become a Sponsor: https://github.com/sponsors/dansiegel
   - Enterprise Access: enterprise.md
