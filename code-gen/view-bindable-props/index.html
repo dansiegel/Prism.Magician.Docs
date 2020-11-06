@@ -9,13 +9,14 @@
         <meta name="description" content="Documentation for the Prism Magician">
       
       
+      
         <link rel="canonical" href="https://magic.prismplugins.com/code-gen/view-bindable-props/">
       
       
         <meta name="author" content="Dan Siegel">
       
       <link rel="shortcut icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.3">
     
     
       
@@ -23,10 +24,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.19190aaf.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2cb7adb3.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.24b84193.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -64,6 +65,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#default-values" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -326,9 +332,56 @@
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        View Bindable/Dependency Props
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" class="md-nav__link md-nav__link--active">
       View Bindable/Dependency Props
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#default-values" class="md-nav__link">
+    Default Values
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-events" class="md-nav__link">
+    Handling events
+  </a>
+  
+    <nav class="md-nav" aria-label="Handling events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-event-handler-behavior" class="md-nav__link">
+    Customizing Event Handler Behavior
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -381,6 +434,54 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#default-values" class="md-nav__link">
+    Default Values
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-events" class="md-nav__link">
+    Handling events
+  </a>
+  
+    <nav class="md-nav" aria-label="Handling events">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-event-handler-behavior" class="md-nav__link">
+    Customizing Event Handler Behavior
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -389,7 +490,128 @@
                 
                   <h1>View Bindable/Dependency Props</h1>
                 
-                
+                <div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This feature is still in preview as the IL Weaving piece has not yet been completed</p>
+</div>
+<p>It's not at all uncommon when developing custom components to be working with the Application Framework's View types, and need to add a BindableProperty / DependencyProperty. These properties tend to be very verbose, not very type friendly, static, and a lot of typing. The Magician aims to make these tasks a little easier by allowing you to write convention based code that simplifies what your intent is. For this sample we'll look at a Xamarin.Forms Bindable Property, but WPF/Uno Platform Dependency Properties will work the same way.</p>
+<p>Let's say that you're building a reusable UserProfileComponent and it will have a FirstName and LastName property which will bind to different labels. What your real intent here is that you have two properties, so why clutter it up?</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">UserProfileComponent</span> <span class="p">:</span> <span class="n">ContentView</span>
+<span class="p">{</span>
+<span class="na">    [BindableProperty]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="na">    [BindableProperty]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When working with a WPF / Uno Platform project, use the DependencyProperty attribute instead. The BindableProperty attribute is ignored on those platforms and the DependencyProperty attribute is ignored in Xamarin.Forms projects.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Always be sure to make any class partial when using the Magician otherwise it will fail the build when it generates additional code.</p>
+</div>
+<p>The Magician will first CodeGen our BindableProperties like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">UserProfileComponent</span> <span class="p">:</span> <span class="n">ContentView</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">BindableProperty</span> <span class="n">FirstNameProperty</span> <span class="p">=</span>
+        <span class="n">BindableProperty</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;FirstName&quot;</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span> <span class="k">typeof</span><span class="p">(</span><span class="n">UserProfileComponent</span><span class="p">),</span> <span class="k">null</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">readonly</span> <span class="n">BindableProperty</span> <span class="n">FirstNameProperty</span> <span class="p">=</span>
+        <span class="n">BindableProperty</span><span class="p">.</span><span class="n">Create</span><span class="p">(</span><span class="s">&quot;LastName&quot;</span><span class="p">,</span> <span class="k">typeof</span><span class="p">(</span><span class="kt">string</span><span class="p">),</span> <span class="k">typeof</span><span class="p">(</span><span class="n">UserProfileComponent</span><span class="p">),</span> <span class="k">null</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Next the Magician will use IL weaving to change our getter and setter to:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">UserProfileComponent</span> <span class="p">:</span> <span class="n">ContentView</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span>
+    <span class="p">{</span>
+        <span class="k">get</span> <span class="p">=&gt;</span> <span class="p">(</span><span class="kt">string</span><span class="p">)</span><span class="n">GetValue</span><span class="p">(</span><span class="n">FirstNameProperty</span><span class="p">);</span>
+        <span class="k">set</span> <span class="p">=&gt;</span> <span class="n">SetValue</span><span class="p">(</span><span class="n">FirstNameProperty</span><span class="p">,</span> <span class="k">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The IL weaving feature is still not complete.</p>
+</div>
+<h2 id="default-values">Default Values<a class="headerlink" href="#default-values" title="Permanent link">&para;</a></h2>
+<p>When adding the BindableProperty or DependencyProperty attribute you can pass a default value in the constructor of the attribute. This value will be used as the default value in the generated BindableProperty or DependencyProperty.</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[BindableProperty(&quot;Dan&quot;)]</span>
+<span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="na">[BindableProperty(&quot;Siegel&quot;)]</span>
+<span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div>
+
+<h2 id="handling-events">Handling events<a class="headerlink" href="#handling-events" title="Permanent link">&para;</a></h2>
+<p>Handling Changed events with Bindable or Dependency Properties can be quite infuriating as you're working with the least common denominator rather than working with a strongly typed API. For example you may normally write a handler like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">OnFirstNameChanged</span><span class="p">(</span><span class="n">BindableObject</span> <span class="n">bindable</span><span class="p">,</span> <span class="kt">object</span> <span class="n">oldValue</span><span class="p">,</span> <span class="kt">object</span> <span class="n">newValue</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>With the Magician you have both flexibility and the ability to continue writing the same horrible method handlers, or you can write more intelligent handlers like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">OnFirstNameChanged</span><span class="p">(</span><span class="n">UserProfileComponent</span> <span class="n">component</span><span class="p">,</span> <span class="kt">string</span> <span class="n">oldValue</span><span class="p">,</span> <span class="kt">string</span> <span class="n">newValue</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Granted that's better but still not really ideal in my opinion, so the Magician has you covered as you can also write your handlers like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">private</span> <span class="k">void</span> <span class="nf">OnFirstNameChanged</span><span class="p">(</span><span class="kt">string</span> <span class="n">oldValue</span><span class="p">,</span> <span class="kt">string</span> <span class="n">newValue</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Or you can keep it really simple like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">private</span> <span class="k">void</span> <span class="nf">OnFirstNameChanged</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="customizing-event-handler-behavior">Customizing Event Handler Behavior<a class="headerlink" href="#customizing-event-handler-behavior" title="Permanent link">&para;</a></h3>
+<p>Let's say that you have a 3rd property for the DisplayName and this will need to be updated whenever either the FirstName or LastName are updated. We can easily achieve this with the Magician:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">UserProfileComponent</span> <span class="p">:</span> <span class="n">ContentView</span>
+<span class="p">{</span>
+<span class="na">    [BindableProperty]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">DisplayName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="na">    [BindableProperty(onChanged: nameof(UpdateDisplayName))]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">FirstName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="na">    [BindableProperty(onChanged: nameof(UpdateDisplayName))]</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">LastName</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">UpdateDisplayName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">name</span> <span class="p">=</span> <span class="k">null</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">FirstName</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">name</span> <span class="p">=</span> <span class="n">FirstName</span><span class="p">;</span>
+
+            <span class="k">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">LastName</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="n">name</span> <span class="p">+=</span> <span class="err">$</span><span class="s">&quot; {LastName[0]}.&quot;</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="p">(!</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrEmpty</span><span class="p">(</span><span class="n">LastName</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">name</span> <span class="p">=</span> <span class="err">$</span><span class="s">&quot;Mr. {LastName}&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">DisplayName</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
                 
               
               

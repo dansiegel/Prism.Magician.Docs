@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://magic.prismplugins.com/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/getting-started/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/connecting-to-the-feed/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/codegen-vs-il-weaving/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/analyzers/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/code-gen/auto-initialization/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/code-gen/view-registration/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/code-gen/dialogs/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/code-gen/service-registration/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/code-gen/view-bindable-props/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/code-gen/viewmodelbase/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://magic.prismplugins.com/enterprise/</loc>
-     <lastmod>2020-11-03</lastmod>
+     <lastmod>2020-11-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

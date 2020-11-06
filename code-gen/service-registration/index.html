@@ -9,13 +9,14 @@
         <meta name="description" content="Documentation for the Prism Magician">
       
       
+      
         <link rel="canonical" href="https://magic.prismplugins.com/code-gen/service-registration/">
       
       
         <meta name="author" content="Dan Siegel">
       
       <link rel="shortcut icon" href="../../assets/favicon.ico">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.2">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.1.3">
     
     
       
@@ -23,10 +24,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.19190aaf.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2cb7adb3.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.24b84193.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.f0267088.min.css">
         
           
           
@@ -64,6 +65,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#multiple-interfaces" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -314,9 +320,43 @@
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Service Registration
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" class="md-nav__link md-nav__link--active">
       Service Registration
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-interfaces" class="md-nav__link">
+    Multiple Interfaces
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registering-multiple-services-for-a-single-implementation" class="md-nav__link">
+    Registering Multiple Services for a Single Implementation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -381,6 +421,41 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-interfaces" class="md-nav__link">
+    Multiple Interfaces
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registering-multiple-services-for-a-single-implementation" class="md-nav__link">
+    Registering Multiple Services for a Single Implementation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -389,7 +464,88 @@
                 
                   <h1>Service Registration</h1>
                 
-                
+                <p>Service Registration can get really tedious. You have an interface definition, with one or more implementations. Maybe you need to register them in your Module or Application or perhaps you're using Shiny and need to register it in your Startup.</p>
+<p>The Magician uses a pattern similar to MEF in which a Registration attribute is added to the service implementation. There is an attribute matching each of Prism 8's registration APIs. For example let's say that we had the following services:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">interface</span> <span class="n">IBackendOptions</span>
+<span class="p">{</span>
+    <span class="kt">string</span> <span class="n">Uri</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">string</span> <span class="n">ClientId</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">interface</span> <span class="n">IApiClient</span>
+<span class="p">{</span>
+    <span class="c1">// your API here...</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>We know that we'll be using these services in our app, typically we might have something like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">RegisterTypes</span><span class="p">(</span><span class="n">IContainerRegistry</span> <span class="n">containerRegistry</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">containerRegistry</span><span class="p">.</span><span class="n">RegisterSingleton</span><span class="p">&lt;</span><span class="n">IBackendOptions</span><span class="p">,</span> <span class="n">BackendOptions</span><span class="p">&gt;();</span>
+    <span class="n">containerRegistry</span><span class="p">.</span><span class="n">Register</span><span class="p">&lt;</span><span class="n">IApiClient</span><span class="p">,</span> <span class="n">MyApiClient</span><span class="p">&gt;();</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>While you can continue to do that with services manually, with the Magician you can now instead decorate your service implementations like:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[RegisterSingleton]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BackendOptions</span> <span class="p">:</span> <span class="n">IBackendOptions</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="na">[Register]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyApiClient</span> <span class="p">:</span> <span class="n">IApiClient</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>As you might expect, the Magician will generate the code that you would have written above. This however helps to ensure that as you are working on your service implementation you will always be able to see at a glance that it is registered which additionally helps as other developers on your team work on the code later on.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Scoped Services are currently not supported. If you have a good use case for why you really need a Scoped Service you should discuss this in Discord, and it could be added. At the current time, it's my belief that only in the case of the Prism INavigationService in Prism.Forms is there truly a good case for Scoped services in a Prism application.</p>
+</div>
+<h2 id="multiple-interfaces">Multiple Interfaces<a class="headerlink" href="#multiple-interfaces" title="Permanent link">&para;</a></h2>
+<p>There are times in which you may find yourself implementing multiple services. As example we may implement our IApiClient, and IDisposable on MyApiClient. We have no real way of knowing however whether you want MyApiClient to be registered for IApiClient or IDisposable. In this particular case you can specify the service type like:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[Register(typeof(IApiClient))]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyApiClient</span> <span class="p">:</span> <span class="n">IApiClient</span><span class="p">,</span> <span class="n">IDisposable</span>
+<span class="p">{</span>
+    <span class="c1">// your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2 id="registering-multiple-services-for-a-single-implementation">Registering Multiple Services for a Single Implementation<a class="headerlink" href="#registering-multiple-services-for-a-single-implementation" title="Permanent link">&para;</a></h2>
+<p>Sometimes you may find a need to have multiple smaller service definitions. As an example let's say that we're building an modular application. We might have an Authentication Module with an Authentication Service that handles getting the authentication token we will use to work with our API, and ultimately invalidating our session / token when the user signs out. We may however want to expose the Sign Out functionality in a common interface that can be shared between various modules in our application. In this case we might end up with something like:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">interface</span> <span class="n">IUserSessionService</span>
+<span class="p">{</span>
+    <span class="n">Task</span> <span class="nf">SignOutAsync</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">interface</span> <span class="n">IAuthenticationService</span>
+<span class="p">{</span>
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">SignInAsync</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AuthenticationService</span> <span class="p">:</span> <span class="n">IAuthenticationService</span><span class="p">,</span> <span class="n">IUserSessionService</span>
+<span class="p">{</span>
+    <span class="c1">// your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>In this case we can provide the AuthenticationService with the RegisterMany or RegisterManySingleton attribute depending on whether we expect a new instance or a single instance of the Authentication Service to be maintained.</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[RegisterManySingleton]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">AuthenticationService</span> <span class="p">:</span> <span class="n">IAuthenticationService</span><span class="p">,</span> <span class="n">IUserSessionService</span>
+<span class="p">{</span>
+    <span class="c1">// your code here</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When using RegisterManySingleton you will get a single instance of the Service implementation that will be used across all services. It will not be a single instance per service.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you have an interface such as IDisposable that should not be implemented be sure to pass the service types in the constructor of the attribute</p>
+</div>
                 
               
               
