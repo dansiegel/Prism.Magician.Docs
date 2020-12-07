@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://magic.prismplugins.com/analyzers/">
+        <link rel="canonical" href="https://magic.prismplugins.com/attributes/">
       
       
         <meta name="author" content="Dan Siegel">
@@ -20,7 +20,7 @@
     
     
       
-        <title>About - Prism.Magician</title>
+        <title>Attributes - Prism.Magician</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#magician-analyzers" class="md-skip">
+        <a href="#autoinitialize-attribute" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +96,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              About
+              Attributes
             
           </span>
         </div>
@@ -215,12 +215,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
     <label class="md-nav__link" for="nav-5">
       Analyzers
       <span class="md-nav__icon md-icon"></span>
@@ -237,63 +235,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        About
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../analyzers/" class="md-nav__link">
       About
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#included-analyzers" class="md-nav__link">
-    Included Analyzers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#planned-analyzers" class="md-nav__link">
-    Planned Analyzers
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#will-there-be-more" class="md-nav__link">
-    Will there be more?
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -449,8 +395,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -459,22 +403,22 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#included-analyzers" class="md-nav__link">
-    Included Analyzers
+  <a href="#autoinitialize-attribute" class="md-nav__link">
+    AutoInitialize Attribute
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#planned-analyzers" class="md-nav__link">
-    Planned Analyzers
+  <a href="#autoinitializeparameter-attribute" class="md-nav__link">
+    AutoInitializeParameter Attribute
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#will-there-be-more" class="md-nav__link">
-    Will there be more?
+  <a href="#autoregisterviews-attribute" class="md-nav__link">
+    AutoRegisterViews Attribute
   </a>
   
 </li>
@@ -492,30 +436,29 @@
               
                 
                 
-                <h1 id="magician-analyzers">Magician Analyzers<a class="headerlink" href="#magician-analyzers" title="Permanent link">&para;</a></h1>
-<p>Perhaps one of the most powerful things you never knew you needed, and one of my all time favorite stories. Have you ever seen a resume where someone claimed to be an expert at Intellisense? We all rely on Intellisense to help us write better code and refactor code that could be a little better. Without a doubt Roslyn has made this a much better process for .NET Developers.</p>
-<p>The Magician ships with several Roslyn Analyzers to help power your Intellisense and light up some additional build warnings or errors to keep you on track. At this time the Analyzer suite is still in its infancy, and new analyzers and code refactoring will be introduced over time.</p>
-<h2 id="included-analyzers">Included Analyzers<a class="headerlink" href="#included-analyzers" title="Permanent link">&para;</a></h2>
+                  <h1>Attributes</h1>
+                
+                <p>The Magician works through a combination of understanding the context of your application (are you using WPF, Xamarin.Forms, Uno Platform, Shiny Lib, Microsoft.Extensions.DependencyInjection, etc), and attribute composition. Included in the Magician package is a lightweight class library the only contains some helper attributes. These help you to write code that is clean but clear on it's intent.</p>
+<h2 id="autoinitialize-attribute">AutoInitialize Attribute<a class="headerlink" href="#autoinitialize-attribute" title="Permanent link">&para;</a></h2>
+<p>The AutoInitialize attribute can be used on any ViewModel to initialize properties that have been passed via the Navigation or Dialog Parameters. This is placed on the ViewModel class.</p>
+<p>When the required initialization method is already present in the ViewModel an AutoInitialize method will be generated and then called via IL Weaving.</p>
 <ul>
-<li>Application Lifecycle Analyzer</li>
-<li>Messaging Center Analyzer</li>
-<li>Dependency Service Analyzer</li>
-<li>NavigationResult Handling Analyzer</li>
-<li>Xamarin.Essentials Usage Analyzer</li>
-<li>Dependency Injection Anti-Pattern Analyzer</li>
-<li>Various Analyzers for improper use of Magician Attributes</li>
+<li>On ALL dialog ViewModels - OnDialogOpened</li>
+<li>On Prism.Forms - implements IInitialize.Initialize</li>
+<li>On Wpf/Uno - implements INavigationAware.OnNavigatedTo</li>
 </ul>
-<h2 id="planned-analyzers">Planned Analyzers<a class="headerlink" href="#planned-analyzers" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Unregistered Services</li>
-<li>Detect Additional Bad Coding Practices</li>
-<li>Detect Common Client Id's hard coded</li>
-<li>Detect Additional Bad Practices with Prism's Container</li>
-<li>Detect Invalid ViewModel names (i.e. ViewViewModel)</li>
-<li>Detect Direct INavigationService references when using the Generated ViewModelBase</li>
-</ul>
-<h2 id="will-there-be-more">Will there be more?<a class="headerlink" href="#will-there-be-more" title="Permanent link">&para;</a></h2>
-<p>Yes there will be more analyzers planned and implemented over time. If you have an issue that has caused you problems in the past, be sure to reach out in the Magician channel in Discord and let me know.</p>
+<h2 id="autoinitializeparameter-attribute">AutoInitializeParameter Attribute<a class="headerlink" href="#autoinitializeparameter-attribute" title="Permanent link">&para;</a></h2>
+<p>This is a complimentary attribute that can be used in conjunction with the AutoInitialize attribute. By default all public properties within a class with the AutoInitialize attribute will be initialized by looking in the parameters for a matching key. The AutoInitializeParameter attribute should be used when you need to either override the default parameter name or mark a property as being required.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">SomeViewModel</span> <span class="p">:</span> <span class="n">BindableBase</span>
+<span class="p">{</span>
+<span class="na">    [AutoInitializeParameter(&quot;vehicle&quot;)]</span>
+    <span class="k">public</span> <span class="n">Vehicle</span> <span class="n">Model</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Given the sample code we would expect that by default in the parameters we would be looking for a parameter with the key <code>Model</code>. The search would be case invariant. By adding this attribute with the value <code>vehicle</code>, we now explicitly expect the parameter key to be <code>vehicle</code>.</p>
+<h2 id="autoregisterviews-attribute">AutoRegisterViews Attribute<a class="headerlink" href="#autoregisterviews-attribute" title="Permanent link">&para;</a></h2>
+<p>You may have a lot of views that need to be registered, and while it isn't hard code, it is tedious to add the registrations for every View/ViewModel. We also know that while Prism looks for</p>
                 
               
               
