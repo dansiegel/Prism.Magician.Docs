@@ -4,7 +4,7 @@ While there are certain things that the Magician may be able to infer about your
 
 ```csharp
 [ViewModelBase]
-public class ViewModelBase
+public partial class ViewModelBase
 {
 }
 ```

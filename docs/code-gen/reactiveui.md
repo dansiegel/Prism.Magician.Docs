@@ -10,7 +10,7 @@ In these cases you may find yourself using ReactiveObject as a base class rather
 When working with normal Bindable properties using BindableBase we use the `Bindable` attribute on the properties we want to have the Magician update for us.
 
 ```csharp
-public class SomeViewModel : BindableBase
+public partial class SomeViewModel : BindableBase
 {
     [Bindable]
     public string Message { get; set; }
@@ -20,7 +20,7 @@ public class SomeViewModel : BindableBase
 However when using ReactiveObject as our base class the getter and setter are a little different and ultimately the Bindable paradigm is the wrong terminology. To keep this clear the Bindable attribute used on properties within a class inheriting from ReactiveObject will generate an error. You should instead use the `Reactive` attribute on these properties.
 
 ```csharp
-public class SomeViewModel : ReactiveObject
+public partial class SomeViewModel : ReactiveObject
 {
     [Reactive]
     public string Message { get; set; }
@@ -48,7 +48,7 @@ public class ViewAViewModel : ReactiveObject
 Here again the Magician uses a combination of things to help you out and keep you code clear on intent.
 
 ```csharp
-public class ViewAViewModel : ReactiveObject
+public partial class ViewAViewModel : ReactiveObject
 {
     public ViewAViewModel(IConnectivity connectivity)
     {

@@ -61,7 +61,7 @@ public string Message
 While this is indeed the code required, it is clunky and quickly creates code clutter making it harder to come back to the code and see what our real intent is. It's for this reason we want to use something that will modify the code we write so that we can write less and keep our code easier to read in full. So what does the CodeGen version of this look like?
 
 ```csharp
-public class SomeViewModel : BindableBase
+public partial class SomeViewModel : BindableBase
 {
     [Bindable]
     private string _message;
@@ -77,7 +77,7 @@ This is indeed less to write, and while the attribute may help us decipher a lit
 Ultimately a private backing field is not at all part of our intent, it is part of an ends to our means. So how can this be better? Well, traditionally you might have used PropertyChanged.Fody in which you might have:
 
 ```csharp
-public class SomeViewModel : BindableBase
+public partial class SomeViewModel : BindableBase
 {
     public string Message { get; set; }
 }
@@ -90,7 +90,7 @@ This is much better now we at least know where our public Message property came 
 The Magician primarily focuses on updating getters and setters for your properties while relying on Code Generation as much as possible. This means that your code remains clean, yet readable and clear on it's intent.
 
 ```csharp
-public class SomeViewModel : BindableBase
+public partial class SomeViewModel : BindableBase
 {
     [Bindable]
     public string Message { get; set; }
@@ -100,7 +100,7 @@ public class SomeViewModel : BindableBase
 Remember our real intent is to have a public property called Message which will be bindable for our View to consume. With this the Magician will use CodeGen to provide us our backing field, and IL Weaving to update the getter and setter resulting in the full code that we need to bind our properties in the View.
 
 ```csharp
-public class SomeViewModel : BindableBase
+public partial class SomeViewModel : BindableBase
 {
     private string _message;
     public string Message
